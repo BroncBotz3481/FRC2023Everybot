@@ -6,9 +6,9 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SpinArmCommand extends CommandBase {
+public class SpinCommand extends CommandBase {
   /** Creates a new SpinArmCommand. */
-  public SpinArmCommand() {
+  public SpinCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
