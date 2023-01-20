@@ -6,9 +6,9 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ConeBlockParkCommand extends CommandBase {
-  /** Creates a new ConeBlockParkCommand. */
-  public ConeBlockParkCommand() {
+public class MultiPieceChargeCommand extends CommandBase {
+  /** Creates a new ConeBlockChargeCommand. */
+  public MultiPieceChargeCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
