@@ -6,9 +6,9 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ExtendArmCommand extends CommandBase {
+public class ExtendArmMediumCommand extends CommandBase {
   /** Creates a new ExtendArmCommand. */
-  public ExtendArmCommand() {
+  public ExtendArmMediumCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
