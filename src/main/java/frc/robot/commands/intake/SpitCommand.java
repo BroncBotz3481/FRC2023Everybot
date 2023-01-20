@@ -4,12 +4,20 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class SpitCommand extends CommandBase {
-  /** Creates a new SpitCommand. */
-  public SpitCommand() {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final IntakeSubsystem m_IntakeSubsystem;
+  /** 
+   * @param subsystem
+  Creates a new SpitCommand. */
+  public SpitCommand(IntakeSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_IntakeSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.

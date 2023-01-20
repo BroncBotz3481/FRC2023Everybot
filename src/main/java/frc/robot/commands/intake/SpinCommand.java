@@ -5,11 +5,17 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 
 public class SpinCommand extends CommandBase {
-  /** Creates a new SpinArmCommand. */
-  public SpinCommand() {
+  private final IntakeSubsystem m_IntakeSubsystem;
+  /** 
+   * @param subsystem
+   * Creates a new SpinArmCommand. */
+  public SpinCommand(IntakeSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_IntakeSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
