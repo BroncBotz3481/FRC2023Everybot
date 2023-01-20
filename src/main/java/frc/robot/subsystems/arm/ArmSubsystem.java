@@ -4,12 +4,26 @@
 
 package frc.robot.subsystems.arm;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
-  public ArmSubsystem() {}
+  private final CANSparkMax armMotor;
+  public ArmSubsystem() {
+    armMotor = new CANSparkMax(0, MotorType.kBrushless);
+  }
 
+  public void moveArm(double power) {
+    ArmPolicy.armPower = power;
+    armMotor.set(ArmPolicy.armPower);
+  }
+
+  public void stopArm() {
+    moveArm(0);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
