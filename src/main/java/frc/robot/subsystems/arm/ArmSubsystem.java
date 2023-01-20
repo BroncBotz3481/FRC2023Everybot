@@ -15,7 +15,7 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     armMotor = new CANSparkMax(0, MotorType.kBrushless);
   }
-
+///
   public void moveArm(double power) {
     ArmPolicy.armPower = power;
     armMotor.set(ArmPolicy.armPower);
