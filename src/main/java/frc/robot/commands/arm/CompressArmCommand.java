@@ -4,30 +4,45 @@
 
 package frc.robot.commands.arm;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.subsystems.arm.ArmPolicy;
 import frc.robot.subsystems.arm.ArmSubsystem;
 
 public class CompressArmCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  /** Creates a new CompressArmCommand. */
+  private final ArmSubsystem m_ArmSubsystem;
+  private final DoubleSupplier m_power;
+  /** Creates a new CompressArmCommand. 
+   * @param subsystem
+  */
 
-  public CompressArmCommand() {
+  public CompressArmCommand(ArmSubsystem subsystem, DoubleSupplier power) {
     // Use addRequirements() here to declare subsystem dependencies.
-
+    m_ArmSubsystem = subsystem;
+    m_power = power;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    ArmPolicy.armPower = 0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_ArmSubsystem.moveArm(m_power.getAsDouble());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_ArmSubsystem.stopArm();
+  }
 
   // Returns true when the command should end.
   @Override
