@@ -5,11 +5,18 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.arm.ArmSubsystem;
 
 public class ExtendArmMediumCommand extends CommandBase {
-  /** Creates a new ExtendArmCommand. */
-  public ExtendArmMediumCommand() {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final ArmSubsystem m_ArmSubsystem;
+  /** Creates a new ExtendArmMediumCommand. 
+   * @param subsystem
+  */
+  public ExtendArmMediumCommand(ArmSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_ArmSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.

@@ -5,24 +5,38 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.arm.ArmPolicy;
+import frc.robot.subsystems.arm.ArmSubsystem;
 
 public class StopArmCommand extends CommandBase {
-  /** Creates a new StopArmCommand. */
-  public StopArmCommand() {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final ArmSubsystem m_ArmSubsystem;
+  /** Creates a new StopArmCommand. 
+   * @param subsystem
+  */
+  public StopArmCommand(ArmSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_ArmSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    ArmPolicy.armPower = 0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_ArmSubsystem.stopArm();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_ArmSubsystem.stopArm();
+  }
 
   // Returns true when the command should end.
   @Override

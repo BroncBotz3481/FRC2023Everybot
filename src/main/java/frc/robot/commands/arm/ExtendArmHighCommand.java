@@ -4,12 +4,20 @@
 
 package frc.robot.commands.arm;
 
+import edu.wpi.first.networktables.NetworkTable.SubTableListener;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.arm.ArmSubsystem;
 
 public class ExtendArmHighCommand extends CommandBase {
-  /** Creates a new ExtendArmHighCommand. */
-  public ExtendArmHighCommand() {
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final ArmSubsystem m_ArmSubsystem;
+  /** Creates a new ExtendArmHighCommand. 
+   * @param subsystem
+  */
+  public ExtendArmHighCommand(ArmSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_ArmSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
