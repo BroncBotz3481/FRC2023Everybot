@@ -6,13 +6,15 @@ package frc.robot.subsystems.arm;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import frc.robot.Constants;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
   private final CANSparkMax armMotor;
   public ArmSubsystem() {
-    armMotor = new CANSparkMax(0, MotorType.kBrushless);
+    armMotor = new CANSparkMax(Constants.ArmConstants.kArmMotorCANID, MotorType.kBrushless);
   }
 ///
   public void moveArm(double power) {

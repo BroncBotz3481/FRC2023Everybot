@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
@@ -19,10 +20,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final CANSparkMax motorRightBack;
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    motorLeftFront = new CANSparkMax(0,MotorType.kBrushless);
-    motorLeftBack = new CANSparkMax(1,MotorType.kBrushless);
-    motorRightFront = new CANSparkMax(2,MotorType.kBrushless);
-    motorRightBack = new CANSparkMax(3,MotorType.kBrushless);
+    motorLeftFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftFrontCANID,MotorType.kBrushless);
+    motorLeftBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftBackCANID,MotorType.kBrushless);
+    motorRightFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightFrontCANID,MotorType.kBrushless);
+    motorRightBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightBackCANID,MotorType.kBrushless);
 
     motorLeftBack.follow(motorLeftFront);
     motorRightBack.follow(motorRightFront);

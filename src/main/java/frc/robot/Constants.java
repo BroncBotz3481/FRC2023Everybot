@@ -18,5 +18,15 @@ public final class Constants {
   }
   public static class DriveTrainConstants{
     public static final int kDrivetrainLeftFrontCANID = 0;
+    public static final int kDrivetrainLeftBackCANID = 1;
+    public static final int kDrivetrainRightFrontCANID = 2;
+    public static final int kDrivetrainRightBackCANID = 3;
+  }
+  public static class IntakeConstants{
+    public static final int kIntakeMotor1CANID = 4;
+    public static final int kIntakeMotor2CANID = 5;
+  }
+  public static class ArmConstants{
+    public static final int kArmMotorCANID = 7;
   }
 }
