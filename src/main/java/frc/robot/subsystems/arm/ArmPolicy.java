@@ -13,7 +13,4 @@ public final class ArmPolicy{
     public static final double medium = 100;
     public static final double high = 150;
     public static double clicksPerRev;
-
-    public static void presets(){
-    }
 }
