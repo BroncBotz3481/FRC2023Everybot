@@ -5,22 +5,27 @@
 package frc.robot.subsystems.intake;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   private final CANSparkMax intakeMotor1;
   private final CANSparkMax intakeMotor2;
+  private final RelativeEncoder motor1Encoder;
+  private final RelativeEncoder motor2Encoder;
 
   public IntakeSubsystem() {
     intakeMotor1 = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor1CANID, MotorType.kBrushless);
     intakeMotor2 = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor2CANID, MotorType.kBrushless);
     intakeMotor1.setInverted(false);
     intakeMotor2.setInverted(true);
+    motor1Encoder = intakeMotor1.getEncoder();
+    motor2Encoder = intakeMotor2.getEncoder();
   }
 
   public void runIntake(double power){
@@ -37,5 +42,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    IntakePolicy.encoderTicks1 = motor1Encoder.getVelocity();
+    IntakePolicy.encoderTicks2 = motor2Encoder.getVelocity();
   }
 }
