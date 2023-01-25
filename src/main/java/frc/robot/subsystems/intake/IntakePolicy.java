@@ -7,4 +7,9 @@ package frc.robot.subsystems.intake;
 /** Add your docs here. */
 public final class IntakePolicy {
     public static double intakePower;
+    public static double encoderTicks1;
+    public static double encoderTicks2;
+    
+
 }
+

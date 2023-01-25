@@ -20,8 +20,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private final RelativeEncoder motor2Encoder;
 
   public IntakeSubsystem() {
-    intakeMotor1 = new CANSparkMax(4, MotorType.kBrushless);
-    intakeMotor2 = new CANSparkMax(5, MotorType.kBrushless);
+    intakeMotor1 = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor1CANID, MotorType.kBrushless);
+    intakeMotor2 = new CANSparkMax(Constants.IntakeConstants.kIntakeMotor2CANID, MotorType.kBrushless);
     intakeMotor1.setInverted(false);
     intakeMotor2.setInverted(true);
     motor1Encoder = intakeMotor1.getEncoder();
@@ -42,5 +42,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    IntakePolicy.encoderTicks1 = motor1Encoder.getVelocity();
+    IntakePolicy.encoderTicks2 = motor2Encoder.getVelocity();
   }
 }
