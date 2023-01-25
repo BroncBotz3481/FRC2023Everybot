@@ -8,13 +8,12 @@ package frc.robot.subsystems.arm;
 public final class ArmPolicy{
     public static double armPower;
     public static double targetSpeed;
-    public static double velocity;
-    public static double low;
-    public static double medium;
-    public static double high;
+    public static double ticks;
+    public static final double low = 50;
+    public static final double medium = 100;
+    public static final double high = 150;
+    public static double clicksPerRev;
+
     public static void presets(){
-        low = 20;
-        medium = 40;
-        high = 60;
     }
 }

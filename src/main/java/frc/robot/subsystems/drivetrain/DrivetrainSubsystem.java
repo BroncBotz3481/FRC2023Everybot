@@ -71,12 +71,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightPIDController.setIZone(integralZone);
 }
 
-  public void set(double powerLeft, double powerRight) {
-    DrivetrainPolicy.powerLeft = powerLeft;
-    DrivetrainPolicy.powerRight = powerRight;
+  public void set(double leftSpeed, double rightSpeed) {
+    DrivetrainPolicy.leftSpeed = leftSpeed;
+    DrivetrainPolicy.rightSpeed = rightSpeed;
 
-    leftPIDController.setReference(filter.calculate(DrivetrainPolicy.getLeftVelocity()),ControlType.kVelocity);
-    rightPIDController.setReference(filter.calculate(DrivetrainPolicy.getRightVelocity()), ControlType.kVelocity);
+    leftPIDController.setReference(filter.calculate(DrivetrainPolicy.leftSpeed),ControlType.kVelocity);
+    rightPIDController.setReference(filter.calculate(DrivetrainPolicy.rightSpeed), ControlType.kVelocity);
 }
 
   public void run(double powerLeft, double powerRight){

@@ -49,6 +49,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    ArmPolicy.velocity = encoder.getVelocity();
+    ArmPolicy.ticks = encoder.getVelocity()/encoder.getVelocityConversionFactor();
+    ArmPolicy.clicksPerRev = encoder.getCountsPerRevolution();
   }
 }
