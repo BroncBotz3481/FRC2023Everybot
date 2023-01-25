@@ -44,7 +44,7 @@ public class RobotContainer {
       new XboxController(OperatorConstants.kDriverControllerPort);
 
   private final XboxController m_operatorController =
-      new XboxController(OperatorConstants.kDriverControllerPort);
+      new XboxController(OperatorConstants.kDriverOperatorPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -66,7 +66,7 @@ public class RobotContainer {
     m_driveTrainSubsystem.setDefaultCommand(new DriveCommand(m_driveTrainSubsystem,m_driverController::getLeftY, m_driverController::getRightY));
     m_armSubsystem.setDefaultCommand(new StopArmCommand(m_armSubsystem));
     m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
-    
+
     new Trigger(m_operatorController::getAButton).whileTrue(new SpinCommand(m_intakeSubsystem));
     new Trigger(m_operatorController::getBButton).whileTrue(new SpitCommand(m_intakeSubsystem));
     new Trigger(m_operatorController::getXButton).whileTrue(new CompressArmCommand(m_armSubsystem));

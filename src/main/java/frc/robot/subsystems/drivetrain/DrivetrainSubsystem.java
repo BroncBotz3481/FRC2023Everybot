@@ -13,7 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveTrainConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private final CANSparkMax motorLeftFront;
@@ -32,10 +32,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    motorLeftFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftFrontCANID,MotorType.kBrushless);
-    motorLeftBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftBackCANID,MotorType.kBrushless);
-    motorRightFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightFrontCANID,MotorType.kBrushless);
-    motorRightBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightBackCANID,MotorType.kBrushless);
+    motorLeftFront = new CANSparkMax(DriveTrainConstants.kDrivetrainLeftFrontCANID,MotorType.kBrushless);
+    motorLeftBack = new CANSparkMax(DriveTrainConstants.kDrivetrainLeftBackCANID,MotorType.kBrushless);
+    motorRightFront = new CANSparkMax(DriveTrainConstants.kDrivetrainRightFrontCANID,MotorType.kBrushless);
+    motorRightBack = new CANSparkMax(DriveTrainConstants.kDrivetrainRightBackCANID,MotorType.kBrushless);
     filter = new SlewRateLimiter(.5);
 
     motorLeftBack.follow(motorLeftFront);

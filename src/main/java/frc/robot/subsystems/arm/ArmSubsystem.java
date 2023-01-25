@@ -9,7 +9,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -18,7 +18,7 @@ public class ArmSubsystem extends SubsystemBase {
   private final SparkMaxPIDController PIDController;
   private final RelativeEncoder encoder;
   public ArmSubsystem() {
-    armMotor = new CANSparkMax(Constants.ArmConstants.kArmMotorCANID, MotorType.kBrushless);
+    armMotor = new CANSparkMax(ArmConstants.kArmMotorCANID, MotorType.kBrushless);
     PIDController = armMotor.getPIDController();
     encoder = armMotor.getEncoder();
     set(0,0,0,0,0);
