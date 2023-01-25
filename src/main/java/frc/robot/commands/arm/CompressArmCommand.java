@@ -34,7 +34,7 @@ public class CompressArmCommand extends CommandBase {
   @Override
   public void execute() {
     double finalPos = ArmPolicy.ticks*2;
-    if(ArmPolicy.ticks != finalPos)
+    if(ArmPolicy.ticks < finalPos)
       m_ArmSubsystem.pidMove(-12000);
   }
 
