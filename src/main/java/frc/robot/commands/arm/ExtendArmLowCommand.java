@@ -28,7 +28,10 @@ public class ExtendArmLowCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if(ArmPolicy.ticks < ArmPolicy.low)
+      m_ArmSubsystem.pidMove(12000);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
