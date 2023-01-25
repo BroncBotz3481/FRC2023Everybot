@@ -6,43 +6,96 @@ package frc.robot.subsystems.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private final CANSparkMax motorLeftFront;
   private final CANSparkMax motorRightFront;
   private final CANSparkMax motorLeftBack;
   private final CANSparkMax motorRightBack;
+  private final SlewRateLimiter filter;
+
+  private final DifferentialDrive driveTrain;
+
+  private final SparkMaxPIDController leftPIDController;
+  private final SparkMaxPIDController rightPIDController;
+
+  private final RelativeEncoder frontLeftEncoder;
+  private final RelativeEncoder frontRightEncoder;
+
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    motorLeftFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftFrontCANID,MotorType.kBrushless);
-    motorLeftBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftBackCANID,MotorType.kBrushless);
-    motorRightFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightFrontCANID,MotorType.kBrushless);
-    motorRightBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightBackCANID,MotorType.kBrushless);
+    motorLeftFront = new CANSparkMax(0,MotorType.kBrushless);
+    motorLeftBack = new CANSparkMax(1,MotorType.kBrushless);
+    motorRightFront = new CANSparkMax(2,MotorType.kBrushless);
+    motorRightBack = new CANSparkMax(3,MotorType.kBrushless);
+    filter = new SlewRateLimiter(.5);
 
     motorLeftBack.follow(motorLeftFront);
     motorRightBack.follow(motorRightFront);
+
+    driveTrain = new DifferentialDrive(motorLeftFront, motorRightFront);
+
+    leftPIDController = motorLeftFront.getPIDController();
+    rightPIDController = motorRightFront.getPIDController();
+
+    frontLeftEncoder = motorLeftFront.getEncoder();
+    frontRightEncoder = motorRightFront.getEncoder();
+
+
+
+    this.setPIDF(0.01, 0, 0, 0, 200);
   }
 
-  public void runMotor(double powerLeft, double powerRight){
+  public void setPIDF(double P, double I, double D, double F, double integralZone){
+    leftPIDController.setP(P);
+    leftPIDController.setI(I);
+    leftPIDController.setD(D);
+    leftPIDController.setFF(F);
+    leftPIDController.setIZone(integralZone);
+
+    rightPIDController.setP(P);
+    rightPIDController.setI(I);
+    rightPIDController.setD(D);
+    rightPIDController.setFF(F);
+    rightPIDController.setIZone(integralZone);
+}
+
+public void set(double powerLeft, double powerRight) {
+
+  DrivetrainPolicy.powerLeft = powerLeft;
+  DrivetrainPolicy.powerRight = powerRight;
+
+  leftPIDController.setReference(DrivetrainPolicy.getLeftVelocity(),ControlType.kVelocity);
+  rightPIDController.setReference(DrivetrainPolicy.getRightVelocity(), ControlType.kVelocity);
+}
+
+  public void run(double powerLeft, double powerRight){
     DrivetrainPolicy.powerLeft = powerLeft;
     DrivetrainPolicy.powerRight = powerRight;
-    motorLeftFront.set(DrivetrainPolicy.powerLeft);
-    motorRightFront.set(DrivetrainPolicy.powerRight);
+    driveTrain.arcadeDrive(filter.calculate(DrivetrainPolicy.powerLeft), filter.calculate(DrivetrainPolicy.powerRight));
   }
 
   public void stopMotor(){
-    runMotor(0,0);
+    run(0,0);
   }
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    DrivetrainPolicy.leftEncoderPosition = frontLeftEncoder.getPosition();
+    DrivetrainPolicy.rightEncoderPosition = frontRightEncoder.getPosition();
+    DrivetrainPolicy.leftEncoderVelocity = frontLeftEncoder.getVelocity();
+    DrivetrainPolicy.rightEncoderVelocity = frontRightEncoder.getVelocity();
   }
+  
 }
