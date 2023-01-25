@@ -30,5 +30,4 @@ public final class Constants {
   public static class ArmConstants{
     public static final int kArmMotorCANID = 7;
   }
-  ////For Samuel
 }

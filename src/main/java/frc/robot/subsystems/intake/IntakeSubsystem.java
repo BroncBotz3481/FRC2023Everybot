@@ -41,7 +41,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     IntakePolicy.encoderTicks1 = motor1Encoder.getVelocity();
     IntakePolicy.encoderTicks2 = motor2Encoder.getVelocity();
   }

@@ -10,7 +10,6 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.drivetrain.DrivetrainPolicy;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -38,17 +37,18 @@ public class ArmSubsystem extends SubsystemBase {
     armMotor.set(ArmPolicy.armPower);
   }
 
-  public void pidMove() {
-    PIDController.setReference(ArmPolicy.velocity, ControlType.kVelocity);
-    ArmPolicy.presets();
+  public void pidMove(double targetSpeed) {
+    ArmPolicy.targetSpeed = targetSpeed;
+    PIDController.setReference(ArmPolicy.targetSpeed, ControlType.kVelocity);
+    //ArmPolicy.presets();
   }
 
   public void stopArm() {
     moveArm(0);
   }
+
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    DrivetrainPolicy.encoderTicks = encoder.getVelocity();
+    ArmPolicy.velocity = encoder.getVelocity();
   }
 }

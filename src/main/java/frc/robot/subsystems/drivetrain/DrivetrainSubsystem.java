@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.drivetrain;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -12,9 +11,9 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private final CANSparkMax motorLeftFront;
@@ -33,14 +32,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
-    motorLeftFront = new CANSparkMax(0,MotorType.kBrushless);
-    motorLeftBack = new CANSparkMax(1,MotorType.kBrushless);
-    motorRightFront = new CANSparkMax(2,MotorType.kBrushless);
-    motorRightBack = new CANSparkMax(3,MotorType.kBrushless);
+    motorLeftFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftFrontCANID,MotorType.kBrushless);
+    motorLeftBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainLeftBackCANID,MotorType.kBrushless);
+    motorRightFront = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightFrontCANID,MotorType.kBrushless);
+    motorRightBack = new CANSparkMax(Constants.DriveTrainConstants.kDrivetrainRightBackCANID,MotorType.kBrushless);
     filter = new SlewRateLimiter(.5);
 
     motorLeftBack.follow(motorLeftFront);
     motorRightBack.follow(motorRightFront);
+
+    motorLeftFront.setInverted(false);
+    motorRightBack.setInverted(true);
 
     driveTrain = new DifferentialDrive(motorLeftFront, motorRightFront);
 
@@ -69,13 +71,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightPIDController.setIZone(integralZone);
 }
 
-public void set(double powerLeft, double powerRight) {
+  public void set(double powerLeft, double powerRight) {
+    DrivetrainPolicy.powerLeft = powerLeft;
+    DrivetrainPolicy.powerRight = powerRight;
 
-  DrivetrainPolicy.powerLeft = powerLeft;
-  DrivetrainPolicy.powerRight = powerRight;
-
-  leftPIDController.setReference(DrivetrainPolicy.getLeftVelocity(),ControlType.kVelocity);
-  rightPIDController.setReference(DrivetrainPolicy.getRightVelocity(), ControlType.kVelocity);
+    leftPIDController.setReference(filter.calculate(DrivetrainPolicy.getLeftVelocity()),ControlType.kVelocity);
+    rightPIDController.setReference(filter.calculate(DrivetrainPolicy.getRightVelocity()), ControlType.kVelocity);
 }
 
   public void run(double powerLeft, double powerRight){
@@ -91,7 +92,6 @@ public void set(double powerLeft, double powerRight) {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     DrivetrainPolicy.leftEncoderPosition = frontLeftEncoder.getPosition();
     DrivetrainPolicy.rightEncoderPosition = frontRightEncoder.getPosition();
     DrivetrainPolicy.leftEncoderVelocity = frontLeftEncoder.getVelocity();

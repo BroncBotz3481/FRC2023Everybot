@@ -32,13 +32,13 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_DrivetrainSubsystem.runMotor( m_leftpower.getAsDouble(), m_rightpower.getAsDouble());
+    m_DrivetrainSubsystem.run( m_leftpower.getAsDouble(), m_rightpower.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_DrivetrainSubsystem.runMotor(0,0);
+    m_DrivetrainSubsystem.run(0,0);
   }
 
   // Returns true when the command should end.
