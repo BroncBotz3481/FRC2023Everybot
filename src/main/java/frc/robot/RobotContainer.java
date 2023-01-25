@@ -7,8 +7,17 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.arm.CompressArmCommand;
+import frc.robot.commands.arm.ExtendArmHighCommand;
+import frc.robot.commands.arm.ExtendArmLowCommand;
+import frc.robot.commands.arm.ExtendArmMediumCommand;
 import frc.robot.commands.arm.StopArmCommand;
+import frc.robot.commands.auto.MultiPieceChargeCommand;
 import frc.robot.commands.drivetrain.DriveCommand;
+import frc.robot.commands.drivetrain.OverdriveCommand;
+import frc.robot.commands.intake.SpinCommand;
+import frc.robot.commands.intake.SpitCommand;
+import frc.robot.commands.intake.StopIntakeCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drivetrain.DrivetrainSubsystem;
@@ -56,6 +65,16 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrainSubsystem.setDefaultCommand(new DriveCommand(m_driveTrainSubsystem,m_driverController::getLeftY, m_driverController::getRightY));
     m_armSubsystem.setDefaultCommand(new StopArmCommand(m_armSubsystem));
+    m_intakeSubsystem.setDefaultCommand(new StopIntakeCommand(m_intakeSubsystem));
+    
+    new Trigger(m_operatorController::getAButton).whileTrue(new SpinCommand(m_intakeSubsystem));
+    new Trigger(m_operatorController::getBButton).whileTrue(new SpitCommand(m_intakeSubsystem));
+    new Trigger(m_operatorController::getXButton).whileTrue(new CompressArmCommand(m_armSubsystem));
+    new Trigger(m_operatorController::getYButton).whileTrue(new ExtendArmHighCommand(m_armSubsystem));
+    new Trigger(m_operatorController::getLeftBumper).whileTrue(new ExtendArmMediumCommand(m_armSubsystem));
+    new Trigger(m_operatorController::getRightBumper).whileTrue(new ExtendArmLowCommand(m_armSubsystem));
+    
+    new Trigger(m_driverController::getRightStickButton).or(new Trigger(m_driverController::getLeftStickButton).whileTrue(new OverdriveCommand(m_driveTrainSubsystem, m_driverController::getLeftY, m_driverController::getRightY)));
   }
 
   /**
@@ -65,6 +84,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return new MultiPieceChargeCommand();
   }
 }
