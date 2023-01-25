@@ -16,14 +16,10 @@ public class ArmSubsystem extends SubsystemBase {
   private final SparkMaxPIDController PIDController;
   private final RelativeEncoder encoder;
   public ArmSubsystem() {
-<<<<<<< Updated upstream
     armMotor = new CANSparkMax(Constants.ArmConstants.kArmMotorCANID, MotorType.kBrushless);
-=======
-    armMotor = new CANSparkMax(0, MotorType.kBrushless);
     PIDController = armMotor.getPIDController();
     encoder = armMotor.getEncoder();
     set(0,0,0,0);
->>>>>>> Stashed changes
   }
 ///
   public void set(double p, double i, double d, double f, double iz) {
