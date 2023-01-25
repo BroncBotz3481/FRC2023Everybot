@@ -7,4 +7,13 @@ package frc.robot.subsystems.arm;
 /** Add your docs here. */
 public final class ArmPolicy{
     public static double armPower;
+    public static double velocity;
+    public static double low;
+    public static double medium;
+    public static double high;
+    public void presets(){
+        low = 20;
+        medium = 40;
+        high = 60;
+    }
 }

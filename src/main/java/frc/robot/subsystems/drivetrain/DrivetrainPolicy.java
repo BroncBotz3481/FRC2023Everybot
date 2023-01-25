@@ -8,6 +8,6 @@ package frc.robot.subsystems.drivetrain;
 public class DrivetrainPolicy {
     public static double powerLeft;
     public static double powerRight;
-
+    public static double encoderTicks;
 
 }
