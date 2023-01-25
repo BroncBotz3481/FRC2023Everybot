@@ -14,15 +14,13 @@ import frc.robot.subsystems.arm.ArmSubsystem;
 public class CompressArmCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem m_ArmSubsystem;
-  private final DoubleSupplier m_power;
   /** Creates a new CompressArmCommand. 
    * @param subsystem
   */
 
-  public CompressArmCommand(ArmSubsystem subsystem, DoubleSupplier power) {
+  public CompressArmCommand(ArmSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_ArmSubsystem = subsystem;
-    m_power = power;
     addRequirements(subsystem);
   }
 
