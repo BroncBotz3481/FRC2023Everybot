@@ -7,9 +7,19 @@ package frc.robot.subsystems.intake;
 /** Add your docs here. */
 public final class IntakePolicy {
     public static double intakePower;
+    public static final double noGameElementSpeed = 1000;
     public static double encoderTicks1;
     public static double encoderTicks2;
-    
 
+    public boolean isConeHere() {
+        if (encoderTicks1 < noGameElementSpeed)
+            return true;
+        return false;      
+    }
+    public boolean isCubeHere() {
+        if (encoderTicks2 < noGameElementSpeed)
+            return true;
+        return false;
+    }
 }
 
