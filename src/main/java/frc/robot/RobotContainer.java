@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.arm.StopArmCommand;
+import frc.robot.commands.drivetrain.DriveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.arm.ArmSubsystem;
 import frc.robot.subsystems.drivetrain.DrivetrainSubsystem;
@@ -52,7 +54,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-   
+    m_driveTrainSubsystem.setDefaultCommand(new DriveCommand(m_driveTrainSubsystem,m_driverController::getLeftY, m_driverController::getRightY));
+    m_armSubsystem.setDefaultCommand(new StopArmCommand(m_armSubsystem));
   }
 
   /**
