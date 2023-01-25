@@ -23,7 +23,7 @@ public class StopArmCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ArmPolicy.armPower = 0;
+    m_ArmSubsystem.stopArm();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
