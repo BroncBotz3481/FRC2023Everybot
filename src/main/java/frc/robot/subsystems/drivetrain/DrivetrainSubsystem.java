@@ -85,9 +85,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     driveTrain.arcadeDrive(filter.calculate(DrivetrainPolicy.powerLeft), filter.calculate(DrivetrainPolicy.powerRight));
   }
 
+  public void overDrive(double powerLeft, double powerRight){
+    DrivetrainPolicy.powerLeft = powerLeft;
+    DrivetrainPolicy.powerRight = powerRight;
+    driveTrain.arcadeDrive(DrivetrainPolicy.powerLeft, DrivetrainPolicy.powerRight);
+  }
+
   public void stopMotor(){
     run(0,0);
   }
+
+
 
 
   @Override
