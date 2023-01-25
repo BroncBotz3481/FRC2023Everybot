@@ -11,7 +11,7 @@ public final class ArmPolicy{
     public static double low;
     public static double medium;
     public static double high;
-    public void presets(){
+    public static void presets(){
         low = 20;
         medium = 40;
         high = 60;

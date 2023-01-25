@@ -22,7 +22,7 @@ public class ArmSubsystem extends SubsystemBase {
     armMotor = new CANSparkMax(Constants.ArmConstants.kArmMotorCANID, MotorType.kBrushless);
     PIDController = armMotor.getPIDController();
     encoder = armMotor.getEncoder();
-    set(0,0,0,0);
+    set(0,0,0,0,0);
   }
 ///
   public void set(double p, double i, double d, double f, double iz) {
